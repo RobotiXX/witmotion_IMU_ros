@@ -3,7 +3,7 @@ witmotion:
     #port: ttyUSB0
     port: witImu
     baud_rate: 115200 # baud
-    polling_interval: 0 # ms
+    polling_interval: 10 # ms
     timeout_ms: 0 # ms
     restart_service_name: /restart_imu
     imu_publisher:
