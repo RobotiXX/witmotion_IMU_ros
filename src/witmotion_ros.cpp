@@ -413,8 +413,30 @@ ROSWitmotionSensorController::ROSWitmotionSensorController()
 }
 
 ROSWitmotionSensorController::~ROSWitmotionSensorController() {
-  reader_thread.quit();
-  reader_thread.wait(10000);
+  Stop();
+}
+
+void ROSWitmotionSensorController::Stop() {
+  if (reader_thread.isRunning()) {
+    reader_thread.quit();
+    reader_thread.wait();
+  }
+  // Release ROS entities while main and the middleware are still alive.
+  // File-scope publishers otherwise outlive the singleton node/context.
+  restart_service.reset();
+  imu_publisher.reset();
+  temp_publisher.reset();
+  magnetometer_publisher.reset();
+  barometer_publisher.reset();
+  altimeter_publisher.reset();
+  orientation_publisher.reset();
+  gps_publisher.reset();
+  ground_speed_publisher.reset();
+  gps_altitude_publisher.reset();
+  accuracy_publisher.reset();
+  satellites_publisher.reset();
+  rtc_publisher.reset();
+  node.reset();
 }
 
 bool ROSWitmotionSensorController::Restart(
