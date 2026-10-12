@@ -35,4 +35,6 @@ Documentation
 *.exp
 Debug
 Release
+__pycache__/
+*.py[cod]
 
